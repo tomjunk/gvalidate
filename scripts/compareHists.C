@@ -49,6 +49,11 @@ void compareHists(const char* file1name="rthists_10_06_00.root",
             continue;
         }
 
+	// skip the empties
+	if (h1->Integral() == 0 && h2->Integral() == 0) {
+	  continue;
+	}
+	
         // Create overlay + ratio pads
         if (nplots % 6 == 0) {
             c->Clear();
@@ -104,6 +109,7 @@ void compareHists(const char* file1name="rthists_10_06_00.root",
         h_ratio->GetXaxis()->SetTitle(h1->GetXaxis()->GetTitle());
         h_ratio->SetMinimum(0.5);
         h_ratio->SetMaximum(1.5);
+	h_ratio->SetMarkerSize(0.1);
         h_ratio->Draw("EP");
 
         TLine *line = new TLine(h_ratio->GetXaxis()->GetXmin(),1,
